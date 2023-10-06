@@ -1,0 +1,13 @@
+@model AppMVC.Models.PlanetModel
+
+<h1>@Model.Name</h1>
+<div class="card w-50">
+    <img class="card-img-top" src="~/plannet/@(Model.Name).jpg" alt="" style="width:556px;height:556px;>
+    <div class="card-body">
+        <h5>@Model.VnName</h5>
+        <div class="card-text">
+            @Model.Content;
+        </div>
+    </div>
+    <a class="card-link" asp-action="Index">List of planet</a>
+</div>

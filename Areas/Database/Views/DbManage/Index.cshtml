@@ -1,0 +1,60 @@
+@using Microsoft.EntityFrameworkCore
+@using System.Data
+@inject AppMVC.Models.AppDbContext dbContext
+@{
+    ViewData["Title"] = "info of DbManage";
+    var connect = dbContext.Database.GetDbConnection();
+    var NameDb = connect.Database.ToString();
+    var can_connect = dbContext.Database.CanConnect();
+    
+}
+
+<Partial name="_AlertMessage"></Partial>
+<h1>View of DbManage</h1>
+<p>Connected : @connect</p>
+<p>Connection Name : @NameDb</p>
+<p>Source : @connect.DataSource</p>
+<p>State : @connect.State</p>
+<hr>
+<h2>Information</h2>
+@foreach (var migration in dbContext.Database.GetAppliedMigrations())
+{
+    <p>@migration</p>
+}
+
+@foreach (var migration in dbContext.Database.GetPendingMigrations())
+{
+    <p>@migration (pending )</p>
+}
+
+@if(!can_connect)
+{
+    <p class="alert alert-danger" >Cant connect to Database</p>
+}
+
+@if(dbContext.Database.GetPendingMigrations().Any())
+{
+    <form method="post">
+        <button class="btn btn-success" asp-action="Migrate">Update Migrate</button>
+    </form>
+}
+
+@if(can_connect)
+{
+    <h2>Tables</h2>
+    await dbContext.Database.OpenConnectionAsync();
+    var table = dbContext.Database.GetDbConnection().GetSchema("tables");
+    <ul>
+        @foreach (System.Data.DataRow row in table.Rows)
+        {
+            <li>@row["TABLE_NAME"]</li>
+        }
+    </ul>
+    <a class="btn btn-danger" asp-action="DeleteDB">Xoa Database: @NameDb</a>
+
+}
+
+<hr>
+<form method="post">
+    <button class="btn btn-danger" asp-action="SeedData">SeedData</button>
+</form>

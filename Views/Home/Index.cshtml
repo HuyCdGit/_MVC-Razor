@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<partial name="_AlertMessage"></partial>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<textarea id="summernoteEdit"></textarea>
+
+
+@{
+    var SummerNote = new AppMVC.Models.SummerNote("#summernoteEdit");
+}
+
+
+@* @section Scripts{ 
+    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="~/lib/summernote/summernote-bs4.css" />
+<script>
+    $(document).ready(function(){
+      $('#summernoteEdit').summernote({
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']],
+          ['height', ['height']]
+        ]
+      });
+    });
+</script>
+} *@
+
+@section Scripts{
+    <partial name="_SummerNote" model="SummerNote"></partial>
+}
+
+   
+
+
+
